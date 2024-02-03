@@ -50,6 +50,7 @@ func mainHandle(w http.ResponseWriter, req *http.Request) {
 }
 
 // я что-то вообще запутался, мне нужно новый файл создавать или вообще с чего начать?
+// направьте меня пожалуйста :)
 
 func TestMainHandlerWhenCountMoreThanTotal(t *testing.T) {
 	totalCount := 4
