@@ -49,6 +49,8 @@ func mainHandle(w http.ResponseWriter, req *http.Request) {
 	w.Write([]byte(answer))
 }
 
+// я что-то вообще запутался, мне нужно новый файл создавать или вообще с чего начать?
+
 func TestMainHandlerWhenCountMoreThanTotal(t *testing.T) {
 	totalCount := 4
 	req := httptest.NewRequest("GET", "/cafe?count=9&city=moscow", nil)
