@@ -18,8 +18,8 @@ func TestMainHandlerWhenCountMoreThanTotal(t *testing.T) {
 	handler.ServeHTTP(responseRecorder, req)
 
 	// здесь нужно добавить необходимые проверки
-	assert.Equal(t, http.StatusOK, responseRecorder)
-	assert.Equal(t, "Мир кофе, Сладкоежка, Кофе и завтраки, Сытый студент", responseRecorder)
+	assert.Equal(t, http.StatusOK, responseRecorder.Code)
+	assert.Equal(t, "Мир кофе,Сладкоежка,Кофе и завтраки,Сытый студент", responseRecorder.Body.String())
 	assert.LessOrEqual(t, len(strings.Split(responseRecorder.Body.String(), ",")), totalCount)
 }
 func TestMainHandlerWhenOk(t *testing.T) {
@@ -29,7 +29,7 @@ func TestMainHandlerWhenOk(t *testing.T) {
 	handler := http.HandlerFunc(mainHandle)
 	handler.ServeHTTP(responseRecorder, req)
 	assert.Equal(t, http.StatusOK, responseRecorder.Code)
-	assert.NotEmpty(t, responseRecorder)
+	assert.NotEmpty(t, responseRecorder.Body.String())
 
 	if status := responseRecorder.Code; status != http.StatusOK {
 		t.Errorf("expected status code: %d, got %d", http.StatusOK, status)
@@ -42,8 +42,8 @@ func TestMainHandlerWhenMissingCount(t *testing.T) {
 	responseRecorder := httptest.NewRecorder()
 	handler := http.HandlerFunc(mainHandle)
 	handler.ServeHTTP(responseRecorder, req)
-	assert.Equal(t, http.StatusBadRequest, responseRecorder)
-	assert.Equal(t, "wrong city value", responseRecorder)
+	assert.Equal(t, http.StatusBadRequest, responseRecorder.Code)
+	assert.Equal(t, "count missing", responseRecorder.Body.String())
 
 	if status := responseRecorder.Code; status != http.StatusBadRequest {
 		t.Errorf("expected status code: %d, got %d", http.StatusBadRequest, status)
